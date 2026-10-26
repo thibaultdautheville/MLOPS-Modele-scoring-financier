@@ -1,0 +1,44 @@
+[project]
+name = "mlops-scoring-credit"
+version = "0.1.0"
+description = "Projet 6 OpenClassrooms - Modèle de scoring crédit (Home Credit) et démarche MLOps avec MLflow"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    # Données
+    "numpy",
+    "pandas",
+    "pyarrow",
+    # Visualisation
+    "matplotlib",
+    "seaborn",
+    "missingno",
+    # Machine learning
+    "scikit-learn",
+    "imbalanced-learn",
+    "lightgbm",
+    "xgboost",
+    "optuna",
+    # Explicabilité
+    "shap",
+    # MLOps
+    "mlflow",
+    # Notebooks
+    "ipykernel",
+    "nbformat",
+    "nbconvert",
+    "tqdm",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "pytest",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["notebooks"]

@@ -1,0 +1,23 @@
+# --- Données : restent en local, jamais sur GitHub (2,5 Go) ---
+data/
+
+# --- Environnement virtuel ---
+.venv/
+venv/
+
+# --- MLflow : runs et artefacts locaux ---
+mlruns/
+mlartifacts/
+mlflow.db
+
+# --- Python / Jupyter ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+
+# --- Système / éditeur ---
+.DS_Store
+.vscode/
+.idea/
