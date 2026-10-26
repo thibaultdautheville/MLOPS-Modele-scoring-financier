@@ -29,7 +29,11 @@ NEW_CLIENTS_FILE = PROCESSED_DATA_PATH / "new_clients.parquet"
 FEATURES_USED_FILE = PROJECT_PATH / "features_used.json"
 
 # ---------------------- MLflow ---------------------
+# Backend SQLite (runs, paramètres, métriques) + dossier local pour les artefacts (modèles, fichiers).
+# Les deux restent en local (.gitignore) : chaque machine a son propre historique de runs.
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{PROJECT_PATH / 'mlflow.db'}")
+MLFLOW_ARTIFACTS_PATH = PROJECT_PATH / "mlartifacts"
+MLFLOW_EXPERIMENT_NAME = "scoring_credit"
 
 # ---------------------- Colonnes clés ---------------------
 ID_COLUMN = "SK_ID_CURR"

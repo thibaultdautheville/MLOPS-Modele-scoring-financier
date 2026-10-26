@@ -18,11 +18,14 @@ Contrainte métier : un faux négatif (crédit accordé à un mauvais payeur) co
 │   └── processed/                #   produits par le notebook 01_2 (train/test/new_clients .parquet)
 ├── notebooks/
 │   ├── 01_1_exploration.ipynb            # Étape 1 (1/2) : analyse exploratoire
-│   └── 01_2_preparation_features.ipynb   # Étape 1 (2/2) : jointures, feature engineering, split
+│   ├── 01_2_preparation_features.ipynb   # Étape 1 (2/2) : jointures, feature engineering, split
+│   └── 02_1_mlflow_setup.ipynb           # Étape 2 : configuration MLflow, premier run (baseline)
 ├── src/
 │   ├── settings.py                       # chemins, constantes, paramètres métier
 │   ├── data_processing_functions.py      # chargement, qualité, nettoyage
-│   └── feature_engineering_functions.py  # kernel jsaguiar adapté
+│   ├── feature_engineering_functions.py  # kernel jsaguiar adapté
+│   └── modeling_functions.py             # validation croisée, métriques
+├── mlflow.db / mlartifacts/      # NON versionnés : runs et artefacts MLflow locaux
 ├── reports/figures/              # graphiques générés par les notebooks
 ├── features_used.json            # liste des features retenues (sortie du notebook 01_2)
 ├── pyproject.toml / uv.lock      # environnement (uv, Mac)
@@ -58,6 +61,17 @@ Python 3.11 à 3.13 est requis (le projet est développé en 3.12).
 Copier les 10 fichiers CSV (dossier `Data` du OneDrive du projet, ou [lien OpenClassrooms](https://s3-eu-west-1.amazonaws.com/static.oc-static.com/prod/courses/files/Parcours_data_scientist/Projet+-+Impl%C3%A9menter+un+mod%C3%A8le+de+scoring/Projet+Mise+en+prod+-+home-credit-default-risk.zip)) dans `data/raw/`, puis exécuter `notebooks/01_2_preparation_features.ipynb` pour générer `data/processed/` (environ 1 minute).
 
 Dans VS Code, choisir le noyau `.venv` du projet pour exécuter les notebooks.
+
+### Suivi des expériences (MLflow)
+
+Exécuter `notebooks/02_1_mlflow_setup.ipynb` (création de l'expérience `scoring_credit`), puis, depuis la racine du dépôt :
+
+```bash
+uv run mlflow ui --backend-store-uri sqlite:///mlflow.db     # Mac
+mlflow ui --backend-store-uri sqlite:///mlflow.db            # VM (.venv activé)
+```
+
+et ouvrir http://127.0.0.1:5000.
 
 ## Routine de travail entre les deux machines
 
