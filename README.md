@@ -19,12 +19,13 @@ Contrainte métier : un faux négatif (crédit accordé à un mauvais payeur) co
 ├── notebooks/
 │   ├── 01_1_exploration.ipynb            # Étape 1 (1/2) : analyse exploratoire
 │   ├── 01_2_preparation_features.ipynb   # Étape 1 (2/2) : jointures, feature engineering, split
-│   └── 02_1_mlflow_setup.ipynb           # Étape 2 : configuration MLflow, premier run (baseline)
+│   ├── 02_1_mlflow_setup.ipynb           # Étape 2 : configuration MLflow, premier run (baseline)
+│   └── 03_1_modeles_comparaison.ipynb    # Étape 3 (1/2) : comparaison de modèles, coût métier et seuil
 ├── src/
 │   ├── settings.py                       # chemins, constantes, paramètres métier
 │   ├── data_processing_functions.py      # chargement, qualité, nettoyage
 │   ├── feature_engineering_functions.py  # kernel jsaguiar adapté
-│   └── modeling_functions.py             # validation croisée, métriques
+│   └── modeling_functions.py             # validation croisée, coût métier, seuil
 ├── mlflow.db / mlartifacts/      # NON versionnés : runs et artefacts MLflow locaux
 ├── reports/figures/              # graphiques générés par les notebooks
 ├── features_used.json            # liste des features retenues (sortie du notebook 01_2)
