@@ -21,7 +21,7 @@ Contrainte métier : un faux négatif (crédit accordé à un mauvais payeur) co
 │   ├── 01_2_preparation_features.ipynb   # Étape 1 (2/2) : jointures, feature engineering, split
 │   ├── 02_1_mlflow_setup.ipynb           # Étape 2 : configuration MLflow, premier run (baseline)
 │   ├── 03_1_modeles_comparaison.ipynb    # Étape 3 : comparaison de 8 modèles, coût métier et seuil
-│   └── 04_1_optimisation_seuil.ipynb     # Étape 4 : Optuna, seuil final, test, Model Registry
+│   └── 04_1_optimisation_seuil.ipynb     # Étape 4 : Optuna, seuil final, test, Model Registry, SHAP
 ├── src/
 │   ├── settings.py                       # chemins, constantes, paramètres métier
 │   ├── data_processing_functions.py      # chargement, qualité, nettoyage
@@ -89,6 +89,18 @@ git add -A && git commit -m "message" && git push    # en fin de session
 - Kernels Kaggle : [Start Here: A Gentle Introduction](https://www.kaggle.com/code/willkoehrsen/start-here-a-gentle-introduction/notebook) (EDA) et [LightGBM with Simple Features](https://www.kaggle.com/code/jsaguiar/lightgbm-with-simple-features/script) (feature engineering).
 - Documentation : [MLflow](https://mlflow.org/), [LightGBM](https://lightgbm.readthedocs.io/en/latest/), [XGBoost](https://xgboost.readthedocs.io/en/stable/), [Optuna](https://optuna.readthedocs.io/en/stable/), [missingno](https://github.com/ResidentMario/missingno).
 
+## Résultats
+
+Modèle retenu : **LightGBM** (`class_weight="balanced"`), hyperparamètres de l'essai Optuna n° 2 (550 arbres de 8 feuilles), seuil de décision **0,49**.
+
+| | Référence « tout accorder » | Validation croisée | Jeu de test |
+|---|---|---|---|
+| Coût métier (FN = 10 × FP) | 0,807 | 0,490 | **0,485** |
+| AUC | 0,50 | 0,785 | **0,787** |
+
+- Le modèle est enregistré dans le Model Registry MLflow sous `scoring_credit_lightgbm`, alias `champion`. Il se recharge par `mlflow.sklearn.load_model("models:/scoring_credit_lightgbm@champion")` ; le seuil est lu dans le paramètre `decision_threshold` du run.
+- Explicabilité (section 11 du notebook 04_1) : SHAP global (`reports/figures/04_1_shap_global.png`) et local (`reports/figures/04_1_shap_local.png`).
+
 ## Avancement
 
 - [x] Étape 1 : préparation, nettoyage et enrichissement des données
@@ -96,7 +108,4 @@ git add -A && git commit -m "message" && git push    # en fin de session
 - [x] Étape 3 : modélisation et comparaison de plusieurs algorithmes (validation croisée, déséquilibre)
 - [x] Étape 4 : optimisation des hyperparamètres (Optuna) et du seuil métier
 - [x] Model Registry : `scoring_credit_lightgbm`, alias `champion`
-- [ ] Explicabilité globale et locale (SHAP)
-- [ ] Serving MLflow et préparation de l'oral
-
-Résultat actuel (jeu de test, seuil 0,49) : coût métier **0,485** (contre 0,807 en accordant tous les crédits), AUC 0,787.
+- [x] Explicabilité globale et locale (SHAP)
