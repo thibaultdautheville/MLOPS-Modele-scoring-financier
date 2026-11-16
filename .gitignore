@@ -21,3 +21,6 @@ __pycache__/
 .DS_Store
 .vscode/
 .idea/
+
+# --- Modèles exportés en local (le modèle vit dans MLflow) ---
+*.skops

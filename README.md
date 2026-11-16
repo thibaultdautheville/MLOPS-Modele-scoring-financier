@@ -20,12 +20,13 @@ Contrainte métier : un faux négatif (crédit accordé à un mauvais payeur) co
 │   ├── 01_1_exploration.ipynb            # Étape 1 (1/2) : analyse exploratoire
 │   ├── 01_2_preparation_features.ipynb   # Étape 1 (2/2) : jointures, feature engineering, split
 │   ├── 02_1_mlflow_setup.ipynb           # Étape 2 : configuration MLflow, premier run (baseline)
-│   └── 03_1_modeles_comparaison.ipynb    # Étape 3 (1/2) : comparaison de modèles, coût métier et seuil
+│   ├── 03_1_modeles_comparaison.ipynb    # Étape 3 : comparaison de 8 modèles, coût métier et seuil
+│   └── 04_1_optimisation_seuil.ipynb     # Étape 4 : Optuna, seuil final, test, Model Registry
 ├── src/
 │   ├── settings.py                       # chemins, constantes, paramètres métier
 │   ├── data_processing_functions.py      # chargement, qualité, nettoyage
 │   ├── feature_engineering_functions.py  # kernel jsaguiar adapté
-│   └── modeling_functions.py             # validation croisée, coût métier, seuil
+│   └── modeling_functions.py             # validation croisée, coût métier, seuil optimal
 ├── mlflow.db / mlartifacts/      # NON versionnés : runs et artefacts MLflow locaux
 ├── reports/figures/              # graphiques générés par les notebooks
 ├── features_used.json            # liste des features retenues (sortie du notebook 01_2)
@@ -91,8 +92,11 @@ git add -A && git commit -m "message" && git push    # en fin de session
 ## Avancement
 
 - [x] Étape 1 : préparation, nettoyage et enrichissement des données
-- [ ] Étape 2 : tracking des expérimentations avec MLflow
-- [ ] Étape 3 : modélisation et comparaison de plusieurs algorithmes (validation croisée, déséquilibre)
-- [ ] Étape 4 : optimisation des hyperparamètres et du seuil métier
+- [x] Étape 2 : tracking des expérimentations avec MLflow
+- [x] Étape 3 : modélisation et comparaison de plusieurs algorithmes (validation croisée, déséquilibre)
+- [x] Étape 4 : optimisation des hyperparamètres (Optuna) et du seuil métier
+- [x] Model Registry : `scoring_credit_lightgbm`, alias `champion`
 - [ ] Explicabilité globale et locale (SHAP)
-- [ ] Model registry et serving MLflow
+- [ ] Serving MLflow et préparation de l'oral
+
+Résultat actuel (jeu de test, seuil 0,49) : coût métier **0,485** (contre 0,807 en accordant tous les crédits), AUC 0,787.
